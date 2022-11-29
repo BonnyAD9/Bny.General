@@ -66,6 +66,9 @@ public readonly ref struct Ptr<T>
     public static implicit operator ReadOnlySpan<T>(Ptr<T> ptr) => MemoryMarshal.CreateSpan(ref ptr._ptr, ptr._length);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static implicit operator Span<T>(Ptr<T> ptr) => MemoryMarshal.CreateSpan(ref ptr._ptr, ptr._length);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator Ptr<T>(Span<T> span) => new(span);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

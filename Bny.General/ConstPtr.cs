@@ -111,7 +111,7 @@ public readonly ref struct ConstPtr<T>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal Enumerator(ConstPtr<T> ptr)
         {
-            _ptr = new(ref Unsafe.Add(ref ptr._ptr, -1), ptr._length);
+            _ptr = new(ref Unsafe.Add(ref ptr._ptr, -1), ptr._length + 1);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

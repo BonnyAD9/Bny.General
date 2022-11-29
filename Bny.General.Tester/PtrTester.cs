@@ -3,26 +3,31 @@
 namespace Bny.General.Tester;
 
 [UnitTest]
-internal static class ConstPtrTester
+internal static class PtrTester
 {
     [UnitTest]
     public static void Test_General(Asserter a)
     {
         int value = Random.Shared.Next(ushort.MaxValue);
         int[] arr = TestData.Generate(100, i => i + value);
-        ReadOnlySpan<int> cspan = new(arr);
         Span<int> span = new(arr);
 
-        ConstPtr<int> pArr = arr;
-        ConstPtr<int> pCspan = cspan;
-        ConstPtr<int> pSpan = span;
+        Ptr<int> pArr = arr;
+        Ptr<int> pSpan = span;
 
         ReadOnlySpan<int> csp = pArr;
+        Span<int> sp = pArr;
 
         a.Assert(pArr.Length == arr.Length);
-        a.Assert(pArr == pCspan);
-        a.Assert(pCspan == pSpan);
-        a.Assert(csp == cspan);
+        a.Assert(pArr == pSpan);
+
+        arr[1] = -1;
+        pArr[2] = -1;
+        pArr.Value = -1;
+
+        a.Assert(pArr[1] == -1);
+        a.Assert(arr[2] == -1);
+        a.Assert(arr[0] == -1);
 
         bool sameData = true;
         for (int i = 0; i < pArr.Length; ++i)
@@ -30,7 +35,7 @@ internal static class ConstPtrTester
 
         a.Assert(sameData);
 
-        ReadOnlySpan<int> cspan5 = cspan[5..];
+        ReadOnlySpan<int> cspan5 = pSpan[5..];
         pArr = pArr[5..];
         ReadOnlySpan<int> csp5 = pArr;
 
@@ -42,7 +47,7 @@ internal static class ConstPtrTester
     {
         int value = Random.Shared.Next(ushort.MaxValue);
         int[] arr = TestData.Generate(100, i => i + value);
-        ConstPtr<int> ptr = arr;
+        Ptr<int> ptr = arr;
 
         a.Assert(+ptr == arr[0]);
         a.Assert(+ptr == ptr.Value);
@@ -76,7 +81,7 @@ internal static class ConstPtrTester
     {
         int value = 0;// Random.Shared.Next(ushort.MaxValue);
         int[] arr = TestData.Generate(5, i => i + value);
-        ConstPtr<int> ptr = arr;
+        Ptr<int> ptr = arr;
 
         bool allSame = true;
         int i = 0;
@@ -85,5 +90,11 @@ internal static class ConstPtrTester
 
         a.Assert(i == arr.Length);
         a.Assert(allSame);
+
+        foreach (ref var n in ptr)
+            n = 5;
+
+        a.Assert(arr[0] == 5);
+        a.Assert(Check.AllNeighbours(arr, (a, b) => a == b));
     }
 }
