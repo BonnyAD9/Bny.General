@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Bny.General;
@@ -36,7 +37,7 @@ public readonly ref struct Ptr<T>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Ptr(ref T ptr, int length)
+    internal Ptr(ref T ptr, int length)
     {
         if (length < 0)
             throw new IndexOutOfRangeException();
@@ -100,6 +101,12 @@ public readonly ref struct Ptr<T>
     public static T operator +(Ptr<T> ptr) => ptr._length == 0 ? throw new IndexOutOfRangeException() : ptr._ptr;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator ==(Ptr<T> ptr1, Ptr<T> ptr2) => ptr1._length == ptr2._length && Unsafe.AreSame(ref ptr1._ptr, ref ptr2._ptr);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator !=(Ptr<T> ptr1, Ptr<T> ptr2) => ptr1._length != ptr2._length || !Unsafe.AreSame(ref ptr1._ptr, ref ptr2._ptr);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Enumerator GetEnumerator() => new(this);
 
     public ref struct Enumerator
@@ -121,4 +128,16 @@ public readonly ref struct Ptr<T>
             get => ref _ptr.Value;
         }
     }
+
+#pragma warning disable CS0809 // Obsolete member overrides non-obsolete member
+
+    [Obsolete("ConstPtr.Equals will always throw exception, use the == operator instead")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override bool Equals(object? obj) => throw new InvalidOperationException("Cannot use Equals on type ConstPtr, use the == operator instead");
+
+    [Obsolete("ConstPtr.GetHashCode will always throw exception")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override int GetHashCode() => throw new InvalidOperationException("Cannot use GetHashCode on type ConstPtr");
+
+#pragma warning restore CS0809 // Obsolete member overrides non-obsolete member
 }
