@@ -178,11 +178,11 @@ public readonly ref struct ConstPtr<T>
     /// <summary>
     /// Determines the number of elements bethween the given pointers that point to the same continuous block of memory. If the pointers not't point to the same memory, the behaviour is undefined.
     /// </summary>
-    /// <param name="p1">The first part of memory</param>
-    /// <param name="p2">The second part of memory</param>
+    /// <param name="p1">The second part of memory</param>
+    /// <param name="p2">The first part of memory</param>
     /// <returns>Number of elements betwen the memory pointers</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static unsafe int operator -(ConstPtr<T> p1, ConstPtr<T> p2) => (int)Unsafe.ByteOffset(ref p1._ptr, ref p2._ptr) / sizeof(T);
+    public static unsafe int operator -(ConstPtr<T> p1, ConstPtr<T> p2) => (int)Unsafe.ByteOffset(ref p2._ptr, ref p1._ptr) / sizeof(T);
 #pragma warning restore CS8500 // This takes the address of, gets the size of, or declares a pointer to a managed type
 
     /// <summary>

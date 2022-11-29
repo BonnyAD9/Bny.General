@@ -42,14 +42,16 @@ public readonly ref struct Ptr<T>
     /// <param name="index">Index of the memory to access</param>
     /// <returns>Memory at the given index</returns>
     /// <exception cref="IndexOutOfRangeException">Throw when the index is larger than the length</exception>
-    public T this[int index]
+    public ref T this[int index]
     {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => (uint)index < (uint)_length ? At(index) : throw new IndexOutOfRangeException();
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => At(index) = value;
+        get
+        {
+            if ((uint)index < (uint)_length)
+                return ref At(index);
+            throw new IndexOutOfRangeException();
+        }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -170,7 +172,7 @@ public readonly ref struct Ptr<T>
     /// <param name="p2">The first pointer in the memory block</param>
     /// <returns>The distance betwheen the two pointers</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static unsafe int operator -(Ptr<T> p1, Ptr<T> p2) => (int)Unsafe.ByteOffset(ref p1._ptr, ref p2._ptr) / sizeof(T);
+    public static unsafe int operator -(Ptr<T> p1, Ptr<T> p2) => (int)Unsafe.ByteOffset(ref p2._ptr, ref p1._ptr) / sizeof(T);
 
     /// <summary>
     /// Determines the distance between two pointers in the same memory block. If the pointers aren't in the same memory block, the behaviour is undefined.
@@ -179,7 +181,7 @@ public readonly ref struct Ptr<T>
     /// <param name="p2">The first pointer in the memory block</param>
     /// <returns>The distance betwheen the two pointers</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static unsafe int operator -(Ptr<T> p1, ConstPtr<T> p2) => (int)Unsafe.ByteOffset(ref p1._ptr, ref p2._ptr) / sizeof(T);
+    public static unsafe int operator -(Ptr<T> p1, ConstPtr<T> p2) => (int)Unsafe.ByteOffset(ref p2._ptr, ref p1._ptr) / sizeof(T);
 
     /// <summary>
     /// Determines the distance between two pointers in the same memory block. If the pointers aren't in the same memory block, the behaviour is undefined.
@@ -188,7 +190,7 @@ public readonly ref struct Ptr<T>
     /// <param name="p2">The first pointer in the memory block</param>
     /// <returns>The distance betwheen the two pointers</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static unsafe int operator -(ConstPtr<T> p1, Ptr<T> p2) => (int)Unsafe.ByteOffset(ref p1._ptr, ref p2._ptr) / sizeof(T);
+    public static unsafe int operator -(ConstPtr<T> p1, Ptr<T> p2) => (int)Unsafe.ByteOffset(ref p2._ptr, ref p1._ptr) / sizeof(T);
 #pragma warning restore CS8500 // This takes the address of, gets the size of, or declares a pointer to a managed type
 
     /// <summary>
@@ -217,6 +219,24 @@ public readonly ref struct Ptr<T>
     /// <returns>True if the pointers don't point to the same memory or don't have the same length</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool operator !=(Ptr<T> ptr1, Ptr<T> ptr2) => ptr1._length != ptr2._length || !Unsafe.AreSame(ref ptr1._ptr, ref ptr2._ptr);
+
+    /// <summary>
+    /// Determines whether the two pointers point to the same memory and have the same length
+    /// </summary>
+    /// <param name="ptr1">Pointer to be compared with ptr2</param>
+    /// <param name="ptr2">Pointer to be compared with ptr1</param>
+    /// <returns>True if the pointers point to the same memory and have the same length, otherwise false</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator ==(ConstPtr<T> ptr1, Ptr<T> ptr2) => ptr1._length == ptr2._length && Unsafe.AreSame(ref ptr1._ptr, ref ptr2._ptr);
+
+    /// <summary>
+    /// Determines whether the two pointers point to different memory or have different length
+    /// </summary>
+    /// <param name="ptr1">Pointer to be compared with ptr2</param>
+    /// <param name="ptr2">Pointer to be compared with ptr1</param>
+    /// <returns>True if the pointers don't point to the same memory or don't have the same length</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool operator !=(ConstPtr<T> ptr1, Ptr<T> ptr2) => ptr1._length != ptr2._length || !Unsafe.AreSame(ref ptr1._ptr, ref ptr2._ptr);
 
     /// <summary>
     /// Enumerates all the values in the memory block pointed to by this

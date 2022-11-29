@@ -12,15 +12,18 @@ internal static class PtrTester
         int value = Random.Shared.Next(ushort.MaxValue);
         int[] arr = TestData.Generate(100, i => i + value);
         Span<int> span = new(arr);
+        ConstPtr<int> cptr1 = span;
 
         Ptr<int> pArr = arr;
         Ptr<int> pSpan = span;
 
         ReadOnlySpan<int> csp = pArr;
         Span<int> sp = pArr;
+        ConstPtr<int> cptr2 = pArr;
 
         a.Assert(pArr.Length == arr.Length);
         a.Assert(pArr == pSpan);
+        a.Assert(cptr1 == cptr2);
 
         arr[1] = -1;
         pArr[2] = -1;
@@ -58,6 +61,7 @@ internal static class PtrTester
             allSameAdd &= arr[i] == +(ptr + i);
 
         a.Assert(allSameAdd);
+        a.Assert(ptr + 5 - ptr == 5);
 
         bool isNonEmptyTrueInv = true;
         bool isNonEmptyTrue = true;

@@ -53,6 +53,7 @@ internal static class ConstPtrTester
             allSameAdd &= arr[i] == +(ptr + i);
 
         a.Assert(allSameAdd);
+        a.Assert(ptr + 5 - ptr == 5);
 
         bool isNonEmptyTrueInv = true;
         bool isNonEmptyTrue = true;
