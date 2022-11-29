@@ -102,4 +102,23 @@ internal static class PtrTester
         a.Assert(arr[0] == 5);
         a.Assert(Check.AllNeighbours(arr, (a, b) => a == b));
     }
+
+    [UnitTest]
+    public static void Test_Fixed(Asserter a)
+    {
+        int value = Random.Shared.Next(ushort.MaxValue);
+        int[] arr = TestData.Generate(5, i => i + value);
+        Ptr<int> ptr = arr;
+
+        unsafe
+        {
+            fixed (int* p = ptr)
+            {
+                p[3] = -1;
+                a.Assert(*p == +ptr);
+                a.Assert(p[2] == ptr[2]);
+                a.Assert(ptr[3] == -1);
+            }
+        }
+    }
 }

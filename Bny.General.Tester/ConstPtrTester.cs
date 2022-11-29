@@ -76,7 +76,7 @@ internal static class ConstPtrTester
     [UnitTest]
     public static void Test_Enumerator(Asserter a)
     {
-        int value = 0;// Random.Shared.Next(ushort.MaxValue);
+        int value = Random.Shared.Next(ushort.MaxValue);
         int[] arr = TestData.Generate(5, i => i + value);
         ConstPtr<int> ptr = arr;
 
@@ -87,5 +87,22 @@ internal static class ConstPtrTester
 
         a.Assert(i == arr.Length);
         a.Assert(allSame);
+    }
+
+    [UnitTest]
+    public static void Test_Fixed(Asserter a)
+    {
+        int value = Random.Shared.Next(ushort.MaxValue);
+        int[] arr = TestData.Generate(5, i => i + value);
+        ConstPtr<int> ptr = arr;
+
+        unsafe
+        {
+            fixed (int* p = ptr)
+            {
+                a.Assert(*p == +ptr);
+                a.Assert(p[2] == ptr[2]);
+            }
+        }
     }
 }

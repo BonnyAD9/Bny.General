@@ -97,6 +97,14 @@ public readonly ref struct ConstPtr<T>
         : new(ref At(start), length);
 
     /// <summary>
+    /// Returns reference to the first item in the memory
+    /// </summary>
+    /// <returns>Reference to the firs item in the memory</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public ref readonly T GetPinnableReference() => ref _ptr;
+
+    /// <summary>
     /// Concerts Ptr to ConstPtr (same as the ConstPtr(Ptr) constructor)
     /// </summary>
     /// <param name="ptr">The Ptr to convert to ConstPtr</param>

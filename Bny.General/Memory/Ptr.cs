@@ -94,6 +94,14 @@ public readonly ref struct Ptr<T>
         : new(ref At(start), length);
 
     /// <summary>
+    /// Returns reference to the first item in the memory
+    /// </summary>
+    /// <returns>Reference to the firs item in the memory</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public ref T GetPinnableReference() => ref _ptr;
+
+    /// <summary>
     /// Converts pointer to ReadOnlySpan
     /// </summary>
     /// <param name="ptr">Pointer to convert to ReadOnlySpan</param>
