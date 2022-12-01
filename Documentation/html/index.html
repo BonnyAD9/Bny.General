@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bny.General: Bny.General.Memory</title>
+<title>Bny.General: Bny.General</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,104 +90,40 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Bny.General.Memory </div></div>
+  <div class="headertitle"><div class="title">Bny.General </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><a class="anchor" id="md_Bny_General_Memory_README"></a>Things that work with memory.</p>
-<h1><a class="anchor" id="autotoc_md1"></a>
-In this directory</h1>
+<div class="textblock"><p ><a class="anchor" id="md_README"></a>C# library with generally useful stuff.</p>
+<h1><a class="anchor" id="autotoc_md8"></a>
+In this repository</h1>
 <ul>
-<li><b>ConstPtr.cs:</b> the <code><a class="el" href="struct_const_ptr.html" title="Read only version of Ptr. Represents a countinuous region of read only memory. Same as ReadOnlySpan,...">ConstPtr</a>&lt;T&gt;</code> ref struct</li>
-<li><b>Ptr.cs:</b> the <code><a class="el" href="struct_ptr.html" title="Mutable version of ConstPtr. Represents continuous memory. Similar to Span, but has pointer arithmeti...">Ptr</a>&lt;T&gt;</code> ref struct</li>
-<li><b>ReadOnlySpanWrapper.cs:</b> the <code><a class="el" href="struct_read_only_span_wrapper.html" title="Wrapper for span, so that it can be casted to object Should be used only on fixed memory">ReadOnlySpanWrapper</a>&lt;T&gt;</code> struct</li>
-<li><b>SpanWrapper.cs:</b> the <code><a class="el" href="struct_span_wrapper.html" title="Wrapper for span, so that it can be casted to object">SpanWrapper</a>&lt;T&gt;</code> struct</li>
+<li><b>Bny.General:</b> the library</li>
+<li><b>Bny.General.Tester:</b> unit tests</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2"></a>
-Examples</h1>
-<h2><a class="anchor" id="autotoc_md3"></a>
-Ptr</h2>
-<p >Multiply all values in an array by 2 using <a class="el" href="struct_ptr.html" title="Mutable version of ConstPtr. Represents continuous memory. Similar to Span, but has pointer arithmeti...">Ptr</a> </p><div class="fragment"><div class="line"> {C#}</div>
-<div class="line">// The array where the values will be multiplied by 2</div>
-<div class="line">var array = int[] { 1, 2, 3, 4, 5, 6 };</div>
-<div class="line"> </div>
-<div class="line">// Iterate trough the array and multiply each value by 2</div>
-<div class="line">for (Ptr&lt;int&gt; ptr = array; ptr; ++ptr)</div>
-<div class="line">    ptr.Value *= 2;</div>
-<div class="line"> </div>
-<div class="line">// The array is modified because ptr just points to the original array</div>
-<div class="line">Console.WriteLine(string.Join(&quot;, &quot;, array)); // 2, 4, 6, 8, 10, 12</div>
-<div class="line"> </div>
-<div class="line">/* Array can be implicitly converted to Ptr without copying the data itself (similar to Span)</div>
-<div class="line"> *  ... Ptr&lt;int&gt; ptr = array; ...</div>
-<div class="line"> * </div>
-<div class="line"> * Ptr is true when its length is not 0, and otherwise false</div>
-<div class="line"> *  ...</div>
-<div class="line"> *  for ( ... ; ptr; ... )</div>
-<div class="line"> *      ...</div>
-<div class="line"> *</div>
-<div class="line"> * Ptr can be moved to the next value by incrementing it</div>
-<div class="line"> *  ... ++ptr ...</div>
-<div class="line"> *</div>
-<div class="line"> * The Ptr.Value property points to the first element in Ptr and can be modified</div>
-<div class="line"> *  ...</div>
-<div class="line"> *      ptr.Value *= 2;</div>
-<div class="line"> *  ...</div>
-<div class="line"> */</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
-ReadOnlySpanWrapper</h2>
-<p >Run a generic method with TSelf generic constraint and as a argument. </p><div class="fragment"><div class="line"> {C#}</div>
-<div class="line">using Bny.General.Memory;</div>
-<div class="line">using System.Numerics;</div>
-<div class="line"> </div>
-<div class="line">int[] arr = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };</div>
-<div class="line">Console.WriteLine(SomeClass.SumOrDefault&lt;int&gt;(arr));</div>
-<div class="line"> </div>
-<div class="line">class SomeClass</div>
-<div class="line">{</div>
-<div class="line">    // Method that should be called trough reflection</div>
-<div class="line">    public static T Sum&lt;T&gt;(ReadOnlySpan&lt;T&gt; span) where T : INumber&lt;T&gt;</div>
-<div class="line">    {</div>
-<div class="line">        T sum = T.AdditiveIdentity;</div>
-<div class="line">        foreach (var item in span)</div>
-<div class="line">            sum += item;</div>
-<div class="line">        return sum;</div>
-<div class="line">    }</div>
-<div class="line"> </div>
-<div class="line">    // Create wrapper for the function that takes the span wrapper as argument</div>
-<div class="line">    public static T SumWrapper&lt;T&gt;(ReadOnlySpanWrapper&lt;T&gt; span) where T : INumber&lt;T&gt;</div>
-<div class="line">        =&gt; Sum&lt;T&gt;(span);</div>
-<div class="line"> </div>
-<div class="line">    /// &lt;summary&gt;</div>
-<div class="line">    /// Calls the Sum function if the type T implements INumber, otherwise returns default value</div>
-<div class="line">    /// &lt;/summary&gt;</div>
-<div class="line">    public static unsafe T? SumOrDefault&lt;T&gt;(ReadOnlySpan&lt;T&gt; span)</div>
-<div class="line">    {</div>
-<div class="line">        // Check whether the type implements the INumber interface</div>
-<div class="line">        if (!typeof(T).GetInterfaces().Any(p =&gt; p.FullName is not null &amp;&amp; p.FullName.Contains(&quot;System.Numerics.INumber&quot;)))</div>
-<div class="line">            return default;</div>
-<div class="line"> </div>
-<div class="line">        // Ensure that the memory is fixed</div>
-<div class="line">        fixed (T* ptr = span)</div>
-<div class="line">        {</div>
-<div class="line">            // Get the method</div>
-<div class="line">            var method = typeof(SomeClass).GetMethod(&quot;SumWrapper&quot;)!;</div>
-<div class="line">            // Add the generic type</div>
-<div class="line">            var genericMethod = method.MakeGenericMethod(typeof(T))!;</div>
-<div class="line">            // create the arguments for the method call</div>
-<div class="line">            // you must call the wrapper because you cannot cast span to object</div>
-<div class="line">            // and calling the &#39;method.CreateDelegate&lt;&gt;()&#39; would always throw exception</div>
-<div class="line">            // because it cannot ensure the generic constraint on the type</div>
-<div class="line">            // you also must call it using reflection because the INumber has the</div>
-<div class="line">            // TSelf generic type</div>
-<div class="line">            var args = new object[] { new ReadOnlySpanWrapper&lt;T&gt;(span) };</div>
-<div class="line">            // call the method</div>
-<div class="line">            var result = (T)genericMethod.Invoke(null, args)!;</div>
-<div class="line"> </div>
-<div class="line">            return result;</div>
-<div class="line">        }</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-</div><!-- fragment --> </div></div><!-- PageDoc -->
+<h1><a class="anchor" id="autotoc_md9"></a>
+Library features</h1>
+<h2><a class="anchor" id="autotoc_md10"></a>
+Bny.General.Memory</h2>
+<p >Things that work with memory.</p>
+<p >Features:</p><ul>
+<li><code><a class="el" href="struct_const_ptr.html" title="Read only version of Ptr. Represents a countinuous region of read only memory. Same as ReadOnlySpan,...">ConstPtr</a>&lt;T&gt;</code> pointer to constant memory, simillar to <code>ReadOnlySpan</code> but has pointer arithmetic and other coll stuff</li>
+<li><code><a class="el" href="struct_ptr.html" title="Mutable version of ConstPtr. Represents continuous memory. Similar to Span, but has pointer arithmeti...">Ptr</a>&lt;T&gt;</code> pointer to memory, simillar to <code>Span&lt;T&gt;</code> but has pointer arighmetic and other cool stuff</li>
+<li><code><a class="el" href="struct_read_only_span_wrapper.html" title="Wrapper for span, so that it can be casted to object Should be used only on fixed memory">ReadOnlySpanWrapper</a>&lt;T&gt;</code> wrapper for <code>ReadOnlySpan&lt;T&gt;</code> that can be casted to object</li>
+<li><code><a class="el" href="struct_span_wrapper.html" title="Wrapper for span, so that it can be casted to object">SpanWrapper</a>&lt;T&gt;</code> wrapper for <code>Span&lt;T&gt;</code> that can be casted to object</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md11"></a>
+How to get it</h1>
+<p >This library is available as a <a href="https://www.nuget.org/packages/Bny.General/">NuGet package</a>.</p>
+<h1><a class="anchor" id="autotoc_md12"></a>
+Links</h1>
+<ul>
+<li><b>Author:</b> <a href="https://github.com/BonnyAD9">BonnyAD9</a></li>
+<li><b>GitHub repository:</b> <a href="https://github.com/BonnyAD9/Bny.General">Bny.General</a></li>
+<li><b>NuGet package:</b> <a href="https://www.nuget.org/packages/Bny.General/">Bny.General</a></li>
+<li><b>My website:</b> <a href="https://bonnyad9.github.io/">bonnyad9.github.io</a></li>
+<li><b>Documentation:</b> <a href="https://bonnyad9.github.io/Bny.General/">Doxygen</a> </li>
+</ul>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

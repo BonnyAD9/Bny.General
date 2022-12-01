@@ -25,12 +25,21 @@
 var NAVTREE =
 [
   [ "Bny.General", "index.html", [
-    [ "Bny.General.Memory", "index.html", [
-      [ "In this directory", "index.html#autotoc_md1", null ],
-      [ "Examples", "index.html#autotoc_md2", [
-        [ "Ptr", "index.html#autotoc_md3", null ],
-        [ "ReadOnlySpanWrapper", "index.html#autotoc_md4", null ]
+    [ "In this repository", "index.html#autotoc_md8", null ],
+    [ "Library features", "index.html#autotoc_md9", [
+      [ "Bny.General.Memory", "index.html#autotoc_md10", null ]
+    ] ],
+    [ "How to get it", "index.html#autotoc_md11", null ],
+    [ "Links", "index.html#autotoc_md12", null ],
+    [ "Bny.General.Memory", "md__bny__general__memory__r_e_a_d_m_e.html", [
+      [ "In this directory", "md__bny__general__memory__r_e_a_d_m_e.html#autotoc_md1", null ],
+      [ "Examples", "md__bny__general__memory__r_e_a_d_m_e.html#autotoc_md2", [
+        [ "Ptr", "md__bny__general__memory__r_e_a_d_m_e.html#autotoc_md3", null ],
+        [ "ReadOnlySpanWrapper", "md__bny__general__memory__r_e_a_d_m_e.html#autotoc_md4", null ]
       ] ]
+    ] ],
+    [ "Bny.General", "md__bny__general__r_e_a_d_m_e.html", [
+      [ "In this directory", "md__bny__general__r_e_a_d_m_e.html#autotoc_md6", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
