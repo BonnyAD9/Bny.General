@@ -1,5 +1,5 @@
 # Bny.General
-Che library code.
+The library code.
 
 ## In this directory
-- **Memory:** the `Bny.General.Memory` namespace, contains `Ptr<T>` and `ConstPtr<T>`
+- **Memory:** the `Bny.General.Memory` namespace, contains for example `Ptr<T>`, `SpanWrapper<T>`
