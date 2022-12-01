@@ -15,7 +15,11 @@ Features:
 - `ReadOnlySpanWrapper<T>` wrapper for `ReadOnlySpan<T>` that can be casted to object
 - `SpanWrapper<T>` wrapper for `Span<T>` that can be casted to object
 
+## How to get it
+This library is available as a [NuGet package](https://www.nuget.org/packages/Bny.General/).
+
 ## Links
 - **Author:** [BonnyAD9](https://github.com/BonnyAD9)
 - **GitHub repository:** [Bny.General](https://github.com/BonnyAD9/Bny.General)
+- **NuGet package:** [Bny.General](https://www.nuget.org/packages/Bny.General/)
 - **My website:** [bonnyad9.github.io](https://bonnyad9.github.io/)
