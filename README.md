@@ -23,3 +23,4 @@ This library is available as a [NuGet package](https://www.nuget.org/packages/Bn
 - **GitHub repository:** [Bny.General](https://github.com/BonnyAD9/Bny.General)
 - **NuGet package:** [Bny.General](https://www.nuget.org/packages/Bny.General/)
 - **My website:** [bonnyad9.github.io](https://bonnyad9.github.io/)
+- **Documentation:** [Doxygen](https://bonnyad9.github.io/Bny.General/)
