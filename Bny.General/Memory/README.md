@@ -41,7 +41,7 @@ Console.WriteLine(string.Join(", ", array)); // 2, 4, 6, 8, 10, 12
 
 ### ReadOnlySpanWrapper
 Run a generic method with TSelf generic constraint and as a argument.
-```
+```C#
 using Bny.General.Memory;
 using System.Numerics;
 
