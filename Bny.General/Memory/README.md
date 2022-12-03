@@ -6,6 +6,7 @@ Things that work with memory.
 - **Ptr.cs:** the `Ptr<T>` ref struct
 - **ReadOnlySpanWrapper.cs:** the `ReadOnlySpanWrapper<T>` struct
 - **SpanWrapper.cs:** the `SpanWrapper<T>` struct
+- **ConstPtrExtensions.cs:** extension methods for `ConstPtr<T>`
 
 ## Examples
 ### Ptr
