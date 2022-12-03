@@ -1,5 +1,4 @@
 ﻿using Bny.General.Memory;
-using Bny.UnitTests;
 
 namespace Bny.General.Tester;
 
@@ -15,13 +14,15 @@ internal class ReadOnlySpanWrapperTester
 
         fixed (int* ptr = originalSpan)
         {
-            ReadOnlySpanWrapper<int> readOnlyWrapper = new(originalReadOnlySpan);
+            ReadOnlySpanWrapper<int> readOnlyWrapper =
+                new(originalReadOnlySpan);
             ReadOnlySpanWrapper<int> wrapper = new(originalSpan);
 
             object readOnlyWrapperAsObject = readOnlyWrapper;
             object wrapperAsObject = wrapper;
 
-            readOnlyWrapper = (ReadOnlySpanWrapper<int>)readOnlyWrapperAsObject;
+            readOnlyWrapper =
+                (ReadOnlySpanWrapper<int>)readOnlyWrapperAsObject;
             wrapper = (ReadOnlySpanWrapper<int>)wrapperAsObject;
 
             ReadOnlySpan<int> unwrappedReadOnlySpan = readOnlyWrapper;

@@ -1,3 +1,3 @@
-﻿using Bny.UnitTests;
+﻿global using Bny.UnitTests;
 
 Tester.TestAll();

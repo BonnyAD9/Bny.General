@@ -1,6 +1,8 @@
 ﻿namespace Bny.General.Memory;
 
-#pragma warning disable CS8500 // This takes the address of, gets the size of, or declares a pointer to a managed type
+// This takes the address of, gets the size of,
+// or declares a pointer to a managed type
+#pragma warning disable CS8500
 
 /// <summary>
 /// Wrapper for span, so that it can be casted to object
@@ -51,7 +53,10 @@ public unsafe readonly struct ReadOnlySpanWrapper<T>
     /// Unwraps the span
     /// </summary>
     /// <param name="wrappedSpan">Span that should be unwapped</param>
-    public static implicit operator ReadOnlySpan<T>(ReadOnlySpanWrapper<T> wrappedSpan) => wrappedSpan.GetSpan();
+    public static implicit operator ReadOnlySpan<T>(
+        ReadOnlySpanWrapper<T> wrappedSpan) => wrappedSpan.GetSpan();
 }
 
-#pragma warning restore CS8500 // This takes the address of, gets the size of, or declares a pointer to a managed type
+// This takes the address of, gets the size of,
+// or declares a pointer to a managed type
+#pragma warning restore CS8500
