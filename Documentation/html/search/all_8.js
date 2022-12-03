@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['readonlyspanwrapper_0',['ReadOnlySpanWrapper',['../struct_read_only_span_wrapper.html',1,'ReadOnlySpanWrapper&lt; T &gt;'],['../struct_read_only_span_wrapper.html#ae5a21199ecb3096bbf439659eb2f85a3',1,'ReadOnlySpanWrapper.ReadOnlySpanWrapper(ReadOnlySpan&lt; T &gt; span)'],['../struct_read_only_span_wrapper.html#ab0d6c01cc7aaff9d456d86d73b0ffd87',1,'ReadOnlySpanWrapper.ReadOnlySpanWrapper(Span&lt; T &gt; span)']]]
+  ['ptr_0',['Ptr',['../struct_ptr.html',1,'Ptr&lt; T &gt;'],['../struct_ptr.html#ab80e6499c5a47c31a5035adb793878f2',1,'Ptr.Ptr(Span&lt; T &gt; span)'],['../struct_ptr.html#abf4b321b8a3bc9a9099152f83cd9e8eb',1,'Ptr.Ptr(T[] arr)']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['value_0',['Value',['../struct_const_ptr.html#a49ca694940904b73d0a82e32c5e9a30e',1,'ConstPtr.Value()'],['../struct_ptr.html#ad9eab5dbce736208b131c0c2e24b7ea8',1,'Ptr.Value()']]]
+  ['this_5bint_20index_5d_0',['this[int index]',['../struct_const_ptr.html#a797d89b85ab2d7bcb36a4d20e0007cfa',1,'ConstPtr.this[int index]()'],['../struct_ptr.html#a0dbb9d45fd51ab3dfb6eeab606fb98d9',1,'Ptr.this[int index]()']]]
 ];
