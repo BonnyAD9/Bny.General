@@ -50,4 +50,15 @@ internal class ConstPtrExtensionsTester
         a.Assert(ptr.IndexOfRepeat(other1) == 6);
         a.Assert(ptr.IndexOfRepeat(other2) == -1);
     }
+
+    [UnitTest]
+    public static void Test_Equals(Asserter a)
+    {
+        ConstPtr<char> p1 = "hello".AsSpan();
+
+        a.Assert(p1.Equals(p1));
+        a.Assert(p1.Equals("hello".AsSpan()));
+        a.Assert(!p1.Equals(p1[1..]));
+        a.Assert(!p1[1..].Equals(p1[..^1]));
+    }
 }

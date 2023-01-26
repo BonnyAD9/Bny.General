@@ -3,9 +3,9 @@
 namespace Bny.General.Memory;
 
 /// <summary>
-/// Extension methods for ConstPtr
+/// Extensions for the Ptr type
 /// </summary>
-public static class ConstPtrExtensions
+public static class PtrExtensions
 {
     /// <summary>
     /// Finds the index of the value in the fiven span that starts on multiple
@@ -18,75 +18,43 @@ public static class ConstPtrExtensions
     /// value.Length (2)
     /// </example>
     /// <typeparam name="T">Type of data in the pointers</typeparam>
-    /// <param name="ptr">The pointer where to search</param>
+    /// <param name="self">The pointer where to search</param>
     /// <param name="value">The value to find</param>
     /// <returns>
     /// Index of the first occurence of value on an index of multiple of
     /// value.Length, if there is no such index, returns -1
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int IndexOfRepeat<T>(
-        this ConstPtr<T> ptr  ,
-             ConstPtr<T> value)
-    {
-        for (int i = 0; ptr.Length - i > value.Length; i += value.Length)
-        {
-            if (ptr[i..].StartsWith(value))
-                return i;
-        }
-        return -1;
-    }
+    public static int IndexOfRepeat<T>(this Ptr<T> self, ConstPtr<T> value)
+        => ((ConstPtr<T>)self).IndexOfRepeat(value);
 
     /// <summary>
     /// Finds the index of the first occurence of the given pointer
     /// using the default equality comparer
     /// </summary>
     /// <typeparam name="T">Type of data in the pointer</typeparam>
-    /// <param name="ptr">Pointer in which to search</param>
+    /// <param name="self">Pointer in which to search</param>
     /// <param name="value">Value to find</param>
     /// <returns>
     /// Index of the first occurrence, -1 if there is no occurence
     /// </returns>
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int IndexOf<T>(this ConstPtr<T> ptr, ConstPtr<T> value)
-    {
-        for (int i = 0; ptr.Length >= value.Length; ++i, ++ptr)
-        {
-            if (ptr.StartsWith(value))
-                return i;
-        }
-        return -1;
-    }
+    public static int IndexOf<T>(this Ptr<T> self, ConstPtr<T> value)
+        => ((ConstPtr<T>)self).IndexOf(value);
 
     /// <summary>
     /// Checks whether the pointer starts with the value in the other pointer
     /// using the default equality comparer
     /// </summary>
     /// <typeparam name="T">Type of values in the pointer</typeparam>
-    /// <param name="ptr">Pointer which start will be checked</param>
+    /// <param name="self">Pointer which start will be checked</param>
     /// <param name="value">Pointer that should start</param>
     /// <returns>True if ptr starts with value, otherwise false</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool StartsWith<T>(this ConstPtr<T> ptr, ConstPtr<T> value)
-    {
-        if (ptr.Length < value.Length)
-            return false;
+    public static bool StartsWith<T>(this Ptr<T> self, ConstPtr<T> value)
+        => ((ConstPtr<T>)self).StartsWith(value);
 
-        for (; value; ++ptr, ++value)
-        {
-            if (+ptr is null)
-            {
-                if (+value is not null)
-                    return false;
-                continue;
-            }
-
-            if (!ptr.Value!.Equals(+value))
-                return false;
-        }
-
-        return true;
-    }
 
     /// <summary>
     /// Finds the index of the first occurence of the given value in the
@@ -97,23 +65,8 @@ public static class ConstPtrExtensions
     /// <param name="value">Value to find</param>
     /// <returns>Index of the first occurence of value in ptr</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int IndexOf<T>(this ConstPtr<T> ptr, T value)
-    {
-        for (int i = 0; ptr; ++ptr, ++i)
-        {
-            if (value is null)
-            {
-                if (+ptr is null)
-                    return i;
-                continue;
-            }
-
-            if (value.Equals(+ptr))
-                return i;
-        }
-
-        return -1;
-    }
+    public static int IndexOf<T>(this Ptr<T> ptr, T value)
+        => ((ConstPtr<T>)ptr).IndexOf(value);
 
     /// <summary>
     /// Checks whether the two pointers have the same contents
@@ -123,41 +76,27 @@ public static class ConstPtrExtensions
     /// <param name="p2"></param>
     /// <returns>True if the pointers have the same content</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool Equals<T>(this ConstPtr<T> p1, ConstPtr<T> p2)
-    {
-        if (p1 == p2)
-            return true;
-
-        if (p1.Length != p2.Length)
-            return false;
-
-        for (; p1; ++p1, ++p2)
-        {
-            if (!Equals(+p1, +p2))
-                return false;
-        }
-
-        return true;
-    }
+    public static bool Equals<T>(this Ptr<T> p1, ConstPtr<T> p2)
+        => ((ConstPtr<T>)p1).Equals(p2);
 
     /// <summary>
     /// Tries to data from self to ptr
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="self"></param>
-    /// <param name="ptr">Where to copy to</param>
+    /// <param name="dest">Where to copy to</param>
     /// <returns>True on success, otherwise false</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool TryCopyTo<T>(this ConstPtr<T> self, Ptr<T> ptr)
-        => ((ReadOnlySpan<T>)self).TryCopyTo(ptr);
+    public static bool TryCopyTo<T>(this Ptr<T> self, Ptr<T> dest)
+        => ((ReadOnlySpan<T>)self).TryCopyTo(dest);
 
     /// <summary>
     /// Copies data from self to ptr
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="self"></param>
-    /// <param name="ptr">Where to copy to</param>
+    /// <param name="dest">Where to copy to</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void CopyTo<T>(this ConstPtr<T> self, Ptr<T> ptr)
-        => ((ReadOnlySpan<T>)self).CopyTo(ptr);
+    public static void CopyTo<T>(this Ptr<T> self, Ptr<T> dest)
+        => ((ReadOnlySpan<T>)self).CopyTo(dest);
 }
