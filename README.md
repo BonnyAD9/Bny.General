@@ -16,6 +16,16 @@ Features:
 - `ReadOnlySpanWrapper<T>` wrapper for `ReadOnlySpan<T>` that can be casted to object
 - `SpanWrapper<T>` wrapper for `Span<T>` that can be casted to object
 
+## Unreleased library features
+### Bny.General.Errorhandling
+Features that help with error propagation.
+
+Features:
+- `Result` class that can hold boolean value (success, failure) and message (usually in case of failure) and can throw exception (with that message)
+- `ResultEx<Ex>` derives from `Result`, you can also specify the type of exception
+- `Result<T>` derives from `Result`, you can specify a return value (usually in case of success)
+- `Result<T, Ex>` derives from `Result<T>`, you can also specfy the type of exception
+
 ## How to get it
 This library is available as a [NuGet package](https://www.nuget.org/packages/Bny.General/).
 
