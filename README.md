@@ -18,7 +18,6 @@ Features:
 - `ConstPtrOrStream` 'interface' for either `ConstPtr<byte>` or stream
 - `PtrOrStream` 'interface' for either `Ptr<byte>` or stream
 
-## Unreleased library features
 ### Bny.General.Errorhandling
 Features that help with error propagation.
 
