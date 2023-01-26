@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['readonlyspanwrapper_0',['ReadOnlySpanWrapper',['../struct_read_only_span_wrapper.html',1,'ReadOnlySpanWrapper&lt; T &gt;'],['../struct_read_only_span_wrapper.html#ae5a21199ecb3096bbf439659eb2f85a3',1,'ReadOnlySpanWrapper.ReadOnlySpanWrapper(ReadOnlySpan&lt; T &gt; span)'],['../struct_read_only_span_wrapper.html#ab0d6c01cc7aaff9d456d86d73b0ffd87',1,'ReadOnlySpanWrapper.ReadOnlySpanWrapper(Span&lt; T &gt; span)']]]
+  ['ptr_0',['Ptr',['../structBny_1_1General_1_1Memory_1_1Ptr.html',1,'Bny.General.Memory.Ptr&lt; T &gt;'],['../structBny_1_1General_1_1Memory_1_1Ptr.html#ac1dde292768c08b4f86febb89e1fb562',1,'Bny.General.Memory.Ptr.Ptr(Span&lt; T &gt; span)'],['../structBny_1_1General_1_1Memory_1_1Ptr.html#a4ba9dffd33b4624911c8d5c0adde67b3',1,'Bny.General.Memory.Ptr.Ptr(T[] arr)']]],
+  ['ptr_3c_20byte_20_3e_1',['Ptr&lt; byte &gt;',['../structBny_1_1General_1_1Memory_1_1Ptr.html',1,'Bny::General::Memory']]],
+  ['ptrextensions_2',['PtrExtensions',['../classBny_1_1General_1_1Memory_1_1PtrExtensions.html',1,'Bny::General::Memory']]],
+  ['ptrorstream_3',['PtrOrStream',['../structBny_1_1General_1_1Memory_1_1PtrOrStream.html',1,'Bny.General.Memory.PtrOrStream'],['../structBny_1_1General_1_1Memory_1_1PtrOrStream.html#a9c2f0292c1aa528d202d9c924135e1d1',1,'Bny.General.Memory.PtrOrStream.PtrOrStream(Ptr&lt; byte &gt; ptr)'],['../structBny_1_1General_1_1Memory_1_1PtrOrStream.html#ac7285e3acb89dc9e174bda31b8634935',1,'Bny.General.Memory.PtrOrStream.PtrOrStream(Stream stream)'],['../structBny_1_1General_1_1Memory_1_1PtrOrStream.html#a4b44976611e60fe7a131b1632a845bbb',1,'Bny.General.Memory.PtrOrStream.PtrOrStream()']]]
 ];

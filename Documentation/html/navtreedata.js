@@ -25,25 +25,37 @@
 var NAVTREE =
 [
   [ "Bny.General", "index.html", [
-    [ "In this repository", "index.html#autotoc_md8", null ],
-    [ "Library features", "index.html#autotoc_md9", [
-      [ "Bny.General.Memory", "index.html#autotoc_md10", null ]
+    [ "In this repository", "index.html#autotoc_md13", null ],
+    [ "Library features", "index.html#autotoc_md14", [
+      [ "Bny.General.Memory", "index.html#autotoc_md15", null ],
+      [ "Bny.General.Errorhandling", "index.html#autotoc_md16", null ]
     ] ],
-    [ "How to get it", "index.html#autotoc_md11", null ],
-    [ "Links", "index.html#autotoc_md12", null ],
-    [ "Bny.General.Memory", "md__bny__general__memory__r_e_a_d_m_e.html", [
-      [ "In this directory", "md__bny__general__memory__r_e_a_d_m_e.html#autotoc_md1", null ],
-      [ "Examples", "md__bny__general__memory__r_e_a_d_m_e.html#autotoc_md2", [
-        [ "Ptr", "md__bny__general__memory__r_e_a_d_m_e.html#autotoc_md3", null ],
-        [ "ReadOnlySpanWrapper", "md__bny__general__memory__r_e_a_d_m_e.html#autotoc_md4", null ]
+    [ "How to get it", "index.html#autotoc_md17", null ],
+    [ "Links", "index.html#autotoc_md18", null ],
+    [ "Bny.General.ErrorHandling", "md_Bny_General_ErrorHandling_README.html", [
+      [ "In this directory", "md_Bny_General_ErrorHandling_README.html#autotoc_md1", null ],
+      [ "Examples", "md_Bny_General_ErrorHandling_README.html#autotoc_md2", [
+        [ "Result", "md_Bny_General_ErrorHandling_README.html#autotoc_md3", null ]
       ] ]
     ] ],
-    [ "Bny.General", "md__bny__general__r_e_a_d_m_e.html", [
-      [ "In this directory", "md__bny__general__r_e_a_d_m_e.html#autotoc_md6", null ]
+    [ "Bny.General.Memory", "md_Bny_General_Memory_README.html", [
+      [ "In this directory", "md_Bny_General_Memory_README.html#autotoc_md5", null ],
+      [ "Examples", "md_Bny_General_Memory_README.html#autotoc_md6", [
+        [ "Ptr", "md_Bny_General_Memory_README.html#autotoc_md7", null ],
+        [ "ReadOnlySpanWrapper", "md_Bny_General_Memory_README.html#autotoc_md8", null ],
+        [ "ConstPtrOrStream", "md_Bny_General_Memory_README.html#autotoc_md9", null ]
+      ] ]
+    ] ],
+    [ "Bny.General", "md_Bny_General_README.html", [
+      [ "In this directory", "md_Bny_General_README.html#autotoc_md11", null ]
+    ] ],
+    [ "Packages", "namespaces.html", [
+      [ "Package List", "namespaces.html", "namespaces_dup" ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
@@ -55,7 +67,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+"annotated.html",
+"structBny_1_1General_1_1Memory_1_1Ptr.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

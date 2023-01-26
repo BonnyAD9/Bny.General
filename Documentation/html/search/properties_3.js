@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['value_0',['Value',['../struct_const_ptr.html#a49ca694940904b73d0a82e32c5e9a30e',1,'ConstPtr.Value()'],['../struct_ptr.html#ad9eab5dbce736208b131c0c2e24b7ea8',1,'Ptr.Value()']]]
+  ['isstream_0',['IsStream',['../structBny_1_1General_1_1Memory_1_1ConstPtrOrStream.html#a6c88d3344ce5ccb868a17170253bbd7c',1,'Bny.General.Memory.ConstPtrOrStream.IsStream()'],['../structBny_1_1General_1_1Memory_1_1PtrOrStream.html#ab1cd1ff67c4015484f95b207fe621ac7',1,'Bny.General.Memory.PtrOrStream.IsStream()']]]
 ];
