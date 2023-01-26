@@ -76,6 +76,24 @@ public class Result<T> : Result
     }
 
     /// <summary>
+    /// Returns true if the operation failed and the value is equal to the
+    /// given value
+    /// </summary>
+    /// <param name="other">The value to compare to</param>
+    /// <returns>True if failed and values are same, otherwise false</returns>
+    public bool FailedAndEqual(T other) => Failed && Equals(Value, other);
+
+    /// <summary>
+    /// Returns true if the operation failed and the value is not equal to the
+    /// fiven value. This is the negation of the == operator
+    /// </summary>
+    /// <param name="other">The value to compare to</param>
+    /// <returns>
+    /// True if failed and values are not same, otherwise false
+    /// </returns>
+    public bool FailedAndNotEqual(T other) => Failed && !Equals(Value, other);
+
+    /// <summary>
     /// Compares the two success and result values
     /// </summary>
     /// <param name="l"></param>
@@ -84,7 +102,7 @@ public class Result<T> : Result
     /// True if both results have the same success and result value
     /// </returns>
     public static bool operator ==(Result<T> l, Result<T> r)
-        => l.Success == r.Success && l.Value!.Equals(r.Value);
+        => l.Success == r.Success && Equals(l.Value, r.Value);
 
     /// <summary>
     /// Compares the two success and result values
@@ -95,7 +113,7 @@ public class Result<T> : Result
     /// False if both results have the same success and result value
     /// </returns>
     public static bool operator !=(Result<T> l, Result<T> r)
-        => l.Success != r.Success || !l.Value!.Equals(r.Value);
+        => l.Success != r.Success || !Equals(l.Value, r.Value);
 
     /// <summary>
     /// Compares the result value if success
@@ -107,11 +125,12 @@ public class Result<T> : Result
     /// <paramref name="r"/>
     /// </returns>
     public static bool operator ==(Result<T> l, T r)
-        => l.Success && l.Value!.Equals(r);
+        => l.Success && Equals(l.Value, r);
 
     /// <summary>
     /// Compares the result value if success
     /// THIS IS NOT NEGATION OF THE == OPERATOR!!
+    /// Use method FailedAndNotEqual if you want the negation
     /// </summary>
     /// <param name="l">Result to compare</param>
     /// <param name="r">Value to compare</param>
@@ -119,9 +138,8 @@ public class Result<T> : Result
     /// True if the result is success and the result value is not same as
     /// <paramref name="r"/>
     /// </returns>
-    [Obsolete("'l != r' is not the same as '!(l == r)'")]
     public static bool operator !=(Result<T> l, T r)
-        => l.Success && !l.Value!.Equals(r);
+        => l.Success && !Equals(l.Value, r);
 
     /// <summary>
     /// Creates new successful result from the value
@@ -130,7 +148,8 @@ public class Result<T> : Result
     public static implicit operator Result<T>(T value) => new(value);
 
     /// <summary>
-    /// Gets the value if success is true, otherwise throws
+    /// Gets the value if success is true, otherwise throws.
+    /// If you don't want this to throw use the property Value
     /// </summary>
     /// <param name="res">Result to get the value from</param>
     public static explicit operator T(Result<T> res) => res.GetOrThrow();

@@ -16,7 +16,7 @@ public class Result<T, Ex> : Result<T> where Ex : Exception
     public Result(T value, bool success, string? message)
         : base(value, success, message)
     {
-        ExceptionType = typeof(T);
+        ExceptionType = typeof(Ex);
     }
 
     /// <summary>
@@ -50,10 +50,4 @@ public class Result<T, Ex> : Result<T> where Ex : Exception
     /// </summary>
     /// <param name="value">Return value of the result</param>
     public static implicit operator Result<T, Ex>(T value) => new(value);
-
-    /// <summary>
-    /// Gets the value if success is true, otherwise throws
-    /// </summary>
-    /// <param name="res">Result to get the value from</param>
-    public static explicit operator T(Result<T, Ex> res) => res.GetOrThrow();
 }
