@@ -2,5 +2,5 @@
 Unit tests for the library
 
 ## In this directory
-- **ConstPtrTester.cs:** unit tests for `ConstPtr<T>`
-- **PtrTester.cs:** unit tests for `Ptr<T>`
+- **Memory:** unit tests for the `Bny.General.Memory` namespace
+- **ErrorHandling:** unit tests for the `Bny.General.ErrorHandling` namespace

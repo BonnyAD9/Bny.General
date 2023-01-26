@@ -15,6 +15,8 @@ Features:
 - `Ptr<T>` pointer to memory, simillar to `Span<T>` but has pointer arighmetic and other cool stuff
 - `ReadOnlySpanWrapper<T>` wrapper for `ReadOnlySpan<T>` that can be casted to object
 - `SpanWrapper<T>` wrapper for `Span<T>` that can be casted to object
+- `ConstPtrOrStream` 'interface' for either `ConstPtr<byte>` or stream
+- `PtrOrStream` 'interface' for either `Ptr<byte>` or stream
 
 ## Unreleased library features
 ### Bny.General.Errorhandling

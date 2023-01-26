@@ -7,6 +7,13 @@ Things that work with memory.
 - **ReadOnlySpanWrapper.cs:** the `ReadOnlySpanWrapper<T>` struct
 - **SpanWrapper.cs:** the `SpanWrapper<T>` struct
 - **ConstPtrExtensions.cs:** extension methods for `ConstPtr<T>`
+- **PtrExtensions.cs** extension methods for `Ptr<T>`
+- **ConstPtrOrStream.cs** the `ConstPtrOrStream` ref struct
+- **PtrOrStream.cs** the `PtrOrStream` ref struct
+- **IConstPtrOrStreamImplementation.cs** the `IConstPtrOrStreamImplementation` internal interface
+- **IPtrOrStreamImplementation.cs** the `IPtrOrStreamImplementation` internal interface
+- **PtrPtrOrStreamImplementation.cs** the `PtrPtrOrStreamImpementation` internal class
+- **StreamPtrOrStreamImplementation.cs** the `StreamPtrOrStreamImplementation` internal class
 
 ## Examples
 ### Ptr
@@ -94,4 +101,39 @@ class SomeClass
         }
     }
 }
+```
+
+### ConstPtrOrStream
+Method that can wor for both stream and span
+```C#
+// Create method that accepts ConstPtrOrStream as argument
+int ReadIntBE(ConstPtrOrStream data)
+{
+    // get ConstPtr to read data
+    ConstPtr<byte> p = data.Read(4);
+
+    if (p.Length != 4)
+        throw new ArgumentOutOfRangeException(nameof(data));
+
+    // do stuff with the data
+    int res = p[3];
+    res |= p[2] << 8;
+    res |= p[1] << 16;
+    res |= p[0] << 24;
+    return res;
+}
+
+/* The method is now generic and can be called with either span or stream
+ * as argument with only a tiny performance overhead for both of them
+ */
+
+byte[] arr = new byte[] { 0, 0, 0, 69 };
+
+// you can call the method with ConstPtr
+Console.WriteLine(ReadIntBE(arr)); // 69
+
+MemoryStream ms = new(arr);
+
+// or you can call it with stream
+Console.WriteLine(ReadIntBE(ms)); // 69
 ```
