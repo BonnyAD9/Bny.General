@@ -105,4 +105,7 @@ public class Result
 
     /// <inheritdoc/>
     public static bool operator !(Result r) => r.Failed;
+
+    /// <inheritdoc/>
+    public static implicit operator bool(Result r) => r.Success;
 }
