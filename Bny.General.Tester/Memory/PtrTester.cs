@@ -1,6 +1,6 @@
 ﻿using Bny.General.Memory;
 
-namespace Bny.General.Tester;
+namespace Bny.General.Tester.Memory;
 
 [UnitTest]
 internal static class PtrTester
@@ -67,7 +67,7 @@ internal static class PtrTester
         bool allSameInc = true;
         foreach (var i in arr)
         {
-            isNonEmptyTrueInv &= !(!ptr);
+            isNonEmptyTrueInv &= !!ptr;
             if (ptr) { }
             else
                 isNonEmptyTrue = false;

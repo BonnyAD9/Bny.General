@@ -1,6 +1,6 @@
 ﻿using Bny.General.Memory;
 
-namespace Bny.General.Tester;
+namespace Bny.General.Tester.Memory;
 
 [UnitTest]
 internal class ConstPtrExtensionsTester
