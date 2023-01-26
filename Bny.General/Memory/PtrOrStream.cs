@@ -13,6 +13,26 @@ public readonly ref struct PtrOrStream
     private readonly IPtrOrStreamImplementation _implementation;
 
     /// <summary>
+    /// Shows whether this is stream
+    /// </summary>
+    public bool IsStream => _stream is not null;
+
+    /// <summary>
+    /// If this is stream, determines whether it can read. True for ptr
+    /// </summary>
+    public bool CanRead => _stream is null || _stream.CanRead;
+
+    /// <summary>
+    /// If this is stream, determines whether it can seek. True for ptr
+    /// </summary>
+    public bool CanSeek => _stream is null || _stream.CanSeek;
+
+    /// <summary>
+    /// If this is stream, determines whether it can write. True for ptr
+    /// </summary>
+    public bool CanWrite => _stream is null || _stream.CanWrite;
+
+    /// <summary>
     /// Creates the ptr version
     /// </summary>
     /// <param name="ptr">backing pointer</param>
@@ -32,6 +52,20 @@ public readonly ref struct PtrOrStream
         _stream = stream;
         _ptr = new(ref Unsafe.NullRef<byte>(), 0);
         _implementation = new StreamPtrOrStreamImplementation();
+    }
+
+    /// <summary>
+    /// DON'T USE THIS CONSTRUCTOR, THIS WILL BE UNINITALIZED
+    /// </summary>
+    [Obsolete(
+        "Don't use this constructor, it will create uninitalized " +
+        "PtrOrStream instance. If that is your intention use the 'default' " +
+        "keyword")]
+    public PtrOrStream()
+    {
+        _stream = default!;
+        _ptr = default;
+        _implementation = default!;
     }
 
     /// <summary>
@@ -82,7 +116,8 @@ public readonly ref struct PtrOrStream
         _implementation.EndWrite(this, ptr);
 
     /// <summary>
-    /// Gets memory with data from the stream or ptr
+    /// Gets memory with data from the stream or ptr. If this is stream it
+    /// must be seekable for this to work.
     /// </summary>
     /// <param name="length">Size of the data to get</param>
     /// <returns>
@@ -109,4 +144,32 @@ public readonly ref struct PtrOrStream
     /// <returns>Number of written bytes</returns>
     public int WriteFrom(ConstPtr<byte> source)
         => _implementation.WriteFrom(this, source);
+
+    /// <inheritdoc/>
+    public static implicit operator PtrOrStream(Ptr<byte> ptr) => new(ptr);
+
+    /// <inheritdoc/>
+    public static implicit operator PtrOrStream(Stream s) => new(s);
+
+    /// <inheritdoc/>
+    public static implicit operator PtrOrStream(byte[] arr) => new(arr);
+
+    /// <inheritdoc/>
+    public static implicit operator PtrOrStream(Span<byte> arr) => new(arr);
+
+    /// <summary>
+    /// Gets the ptr if this is not stream, otherwise throws
+    /// </summary>
+    /// <param name="pos"></param>
+    public static explicit operator Ptr<byte>(PtrOrStream pos) => pos.IsStream
+        ? throw new InvalidOperationException("This ConstPtrOrStream is stream")
+        : pos._ptr;
+
+    /// <summary>
+    /// Gets the Stream if this is stream, otherwise throws
+    /// </summary>
+    /// <param name="pos"></param>
+    public static explicit operator Stream(PtrOrStream pos) => pos.IsStream
+        ? pos._stream
+        : throw new InvalidOperationException("This ConstPtrOrStream is Ptr");
 }

@@ -15,7 +15,7 @@ internal class PtrPtrOrStreamImplementation : IPtrOrStreamImplementation
 
     public int ReadTo(ConstPtrOrStream cpos, Ptr<byte> result)
     {
-        ReadOnlySpan<byte> data = Read(cpos, result._ptr);
+        ReadOnlySpan<byte> data = Read(cpos, result.Length);
         data.CopyTo(result);
         return data.Length;
     }
