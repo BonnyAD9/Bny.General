@@ -14,17 +14,27 @@ internal class ConstPtrOrStreamTests
         a.Assert(cpos.CanRead);
         a.Assert(cpos.CanSeek);
 
-        cpos = new(new MemoryStream());
+        var ms = new MemoryStream(new byte[5]);
+        ms.ReadByte();
+        cpos = new(ms);
 
         a.Assert(cpos.IsStream);
         a.Assert(cpos.CanRead);
         a.Assert(cpos.CanSeek);
+        a.Assert(cpos.Position == 1);
+
+        cpos = new(ms, false);
+
+        a.Assert(cpos.IsStream);
+        a.Assert(cpos.CanRead);
+        a.Assert(cpos.CanSeek);
+        a.Assert(cpos.Position == 0);
     }
 
     [UnitTest]
     public static void Test_Methods_Span(Asserter a)
     {
-        Span<byte> arr = new byte[] { 9, 8, 7, 6, 5 };
+        Ptr<byte> arr = new byte[] { 9, 8, 7, 6, 5 };
         ConstPtrOrStream cpos = new(arr);
 
         var p = cpos.Read(2);
@@ -35,11 +45,15 @@ internal class ConstPtrOrStreamTests
         a.Assert(cpos.ReadTo(b) == 2);
         a.Assert(b[0] == 7 && b[1] == 6);
 
-        cpos.Seek(-3, SeekOrigin.Current);
+        a.Assert(cpos.Seek(-3, SeekOrigin.Current) == 1);
 
-        p = cpos.Read(5);
+        p = cpos.ReadAll();
         a.Assert(p.Length == 4);
         a.Assert(p.StartsWith(arr[1..]));
+
+        cpos.Seek(0, SeekOrigin.Begin);
+
+        a.Assert(arr.HasSameContents(cpos.GetAll()));
     }
 
     [UnitTest]
@@ -56,11 +70,15 @@ internal class ConstPtrOrStreamTests
         a.Assert(cpos.ReadTo(b) == 2);
         a.Assert(b[0] == 7 && b[1] == 6);
 
-        cpos.Seek(-3, SeekOrigin.Current);
+        a.Assert(cpos.Seek(-3, SeekOrigin.Current) == 1);
 
-        p = cpos.Read(5);
+        p = cpos.ReadAll();
         a.Assert(p.Length == 4);
         a.Assert(p.StartsWith(arr[1..]));
+
+        cpos.Seek(0, SeekOrigin.Begin);
+
+        a.Assert(((Ptr<byte>)arr).HasSameContents(cpos.GetAll()));
     }
 
     [UnitTest]

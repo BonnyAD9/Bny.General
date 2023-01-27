@@ -76,8 +76,8 @@ public static class PtrExtensions
     /// <param name="p2"></param>
     /// <returns>True if the pointers have the same content</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool Equals<T>(this Ptr<T> p1, ConstPtr<T> p2)
-        => ((ConstPtr<T>)p1).Equals(p2);
+    public static bool HasSameContents<T>(this Ptr<T> p1, ConstPtr<T> p2)
+        => ((ConstPtr<T>)p1).HasSameContents(p2);
 
     /// <summary>
     /// Tries to data from self to ptr
@@ -99,4 +99,14 @@ public static class PtrExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void CopyTo<T>(this Ptr<T> self, Ptr<T> dest)
         => ((ReadOnlySpan<T>)self).CopyTo(dest);
+
+    /// <summary>
+    /// Creates new array and copies contents of this to it
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="self"></param>
+    /// <returns>New array with the same contents</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T[] ToArray<T>(this Ptr<T> self)
+        => ((ConstPtr<T>)self).ToArray();
 }

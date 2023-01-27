@@ -13,6 +13,11 @@ public readonly ref struct ConstPtrOrStream
     private readonly IConstPtrOrStreamImplementation _implementation;
 
     /// <summary>
+    /// Current position in the stream or span
+    /// </summary>
+    public int Position => _implementation.GetPosition(this);
+
+    /// <summary>
     /// Shows whether this is stream
     /// </summary>
     public bool IsStream => _stream is not null;
@@ -39,14 +44,26 @@ public readonly ref struct ConstPtrOrStream
     }
 
     /// <summary>
-    /// Creates the Stream version
+    /// Creates the Stream version (inherits position)
     /// </summary>
     /// <param name="stream">backing stream</param>
-    public ConstPtrOrStream(Stream stream)
+    public ConstPtrOrStream(Stream stream) : this(stream, true) { }
+
+    /// <summary>
+    /// Creates the stream version
+    /// </summary>
+    /// <param name="stream">backing stream</param>
+    /// <param name="inheritPos">
+    /// True if the position should be inherited from stream
+    /// (if true seeking to the beggining will seek to the begining of the
+    /// stream, if false seeking to the beggining will seek to the position
+    /// in the stream at the time it was given)
+    /// </param>
+    public ConstPtrOrStream(Stream stream, bool inheritPos)
     {
         _stream = stream;
         _ptr = default;
-        _implementation = new StreamPtrOrStreamImplementation();
+        _implementation = new StreamPtrOrStreamImplementation(this, inheritPos);
     }
 
     /// <summary>
@@ -83,11 +100,25 @@ public readonly ref struct ConstPtrOrStream
         => _implementation.ReadTo(this, result);
 
     /// <summary>
+    /// Reads all the remaining data
+    /// </summary>
+    /// <returns>Pointer to the data</returns>
+    public ConstPtr<byte> ReadAll() => _implementation.ReadAll(this);
+
+    /// <summary>
+    /// Gets all the remaining data. If you don't need the mutable array
+    /// use ReadAll instead.
+    /// </summary>
+    /// <returns>All the data to the end of the stream</returns>
+    public byte[] GetAll() => _implementation.GetAll(this);
+
+    /// <summary>
     /// Seeks in the stream or ptr
     /// </summary>
     /// <param name="offset">How much to seek</param>
     /// <param name="origin">Where to seek from</param>
-    public void Seek(int offset, SeekOrigin origin)
+    /// <returns>The new position</returns>
+    public int Seek(int offset, SeekOrigin origin)
         => _implementation.Seek(this, offset, origin);
 
     /// <inheritdoc/>

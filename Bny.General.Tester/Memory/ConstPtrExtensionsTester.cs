@@ -56,9 +56,17 @@ internal class ConstPtrExtensionsTester
     {
         ConstPtr<char> p1 = "hello".AsSpan();
 
-        a.Assert(p1.Equals(p1));
-        a.Assert(p1.Equals("hello".AsSpan()));
-        a.Assert(!p1.Equals(p1[1..]));
-        a.Assert(!p1[1..].Equals(p1[..^1]));
+        a.Assert(p1.HasSameContents(p1));
+        a.Assert(p1.HasSameContents("hello".AsSpan()));
+        a.Assert(!p1.HasSameContents(p1[1..]));
+        a.Assert(!p1[1..].HasSameContents(p1[..^1]));
+    }
+
+    [UnitTest]
+    public static void Test_ToArray(Asserter a)
+    {
+        ConstPtr<char> p1 = "hello".AsSpan();
+
+        a.Assert(p1.HasSameContents(p1.ToArray()));
     }
 }

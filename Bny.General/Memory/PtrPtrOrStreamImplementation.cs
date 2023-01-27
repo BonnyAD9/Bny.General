@@ -20,7 +20,12 @@ internal class PtrPtrOrStreamImplementation : IPtrOrStreamImplementation
         return data.Length;
     }
 
-    public void Seek(ConstPtrOrStream cpos, int offset, SeekOrigin origin)
+    public ConstPtr<byte> ReadAll(ConstPtrOrStream cpos)
+        => cpos._ptr[_offset..];
+
+    public byte[] GetAll(ConstPtrOrStream cpos) => ReadAll(cpos).ToArray();
+
+    public int Seek(ConstPtrOrStream cpos, int offset, SeekOrigin origin)
     {
         var newPos = origin switch
         {
@@ -30,8 +35,10 @@ internal class PtrPtrOrStreamImplementation : IPtrOrStreamImplementation
             _ => throw new UnreachableException()
         };
 
-        _offset = Math.Clamp(newPos, 0, cpos._ptr.Length);
+        return _offset = Math.Clamp(newPos, 0, cpos._ptr.Length);
     }
+
+    public int GetPosition(ConstPtrOrStream cpos) => _offset;
 
     public Ptr<byte> StartWrite(PtrOrStream pos, int length)
     {

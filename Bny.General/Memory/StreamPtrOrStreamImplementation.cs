@@ -3,6 +3,13 @@
 internal class StreamPtrOrStreamImplementation
     : IPtrOrStreamImplementation
 {
+    private int _positionOffset;
+
+    public StreamPtrOrStreamImplementation(ConstPtrOrStream cpos, bool inheritPos)
+    {
+        _positionOffset = inheritPos ? 0 : (int)cpos._stream.Position;
+    }
+
     public ConstPtr<byte> Read(ConstPtrOrStream cpos, int length)
     {
         byte[] buf = new byte[length];
@@ -13,8 +20,24 @@ internal class StreamPtrOrStreamImplementation
     public int ReadTo(ConstPtrOrStream cpos, Ptr<byte> output)
         => cpos._stream.Read(output);
 
-    public void Seek(ConstPtrOrStream cpos, int offset, SeekOrigin origin)
-        => cpos._stream.Seek(offset, origin);
+    public ConstPtr<byte> ReadAll(ConstPtrOrStream cpos) => GetAll(cpos);
+
+    public byte[] GetAll(ConstPtrOrStream cpos)
+    {
+        List<byte> buf = new();
+        int b;
+        while ((b = cpos._stream.ReadByte()) != -1)
+            buf.Add((byte)b);
+        return buf.ToArray();
+    }
+
+    public int Seek(ConstPtrOrStream cpos, int offset, SeekOrigin origin)
+        => (int)cpos._stream.Seek(
+            origin == SeekOrigin.Begin ? offset + _positionOffset : offset,
+            origin) - _positionOffset;
+
+    public int GetPosition(ConstPtrOrStream cpos)
+        => (int)cpos._stream.Position - _positionOffset;
 
     public Ptr<byte> StartWrite(PtrOrStream pos, int length)
         => new byte[length];
